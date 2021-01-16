@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='./css/style.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <main>
+        <div class="content">
+            <h1 class="anim1"><span>Bridging the gap</span> <span>between dream</span> <span>and reality</span></h1>
+            <p class="anim1">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio at ipsa alias modi natus excepturi?</p>
+            <a class="anim1" href="#" id="cta">Start Dreaming</a>
+        </div>
+    </main>
+    <aside>
+        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/2621168/swirl.png" alt="Swirl">
+    </aside>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.0/CSSRulePlugin.min.js"></script>
+    <script>
+
+        var rule = CSSRulePlugin.getRule("span:after");
+
+        // Normal Way
+        // gsap.from('.anim1', {opacity: 0, duration: 1, y: -50, stagger: 0.6});
+        // gsap.from('img', {duration:1, y: 30, opacity: 0, delay: 1.4});
+        // gsap.to(rule, {cssRule: {scaleY: 0}, duration: 1});
+        // gsap.from('aside', {duration: 1, backgroundPosition:'200px 0px', opacity: 0, delay: 1.1});
+    
+        // Timeline Way
+        var tl = gsap.timeline({
+            deafults:{duration:1} 
+        });
+
+        tl.from(".anim1", {opacity: 0, y: -50, stagger: 0.6})
+        .to(rule, {cssRule: {scaleY: 0}, duration: 1.8}, "-=2.2") // -= if you want to start it before waiting for the top animation to complete
+        .from('aside', {backgroundPosition:'200px 0px', opacity: 0}, "-=1.5")
+        .from('img', {duration:1, y: 50, opacity: 0}, "-=.5");
+
+        cta.addEventListener('click', () => {
+            tl.reversed()? tl.play(): tl.reverse();
+        });
+    </script>
+</body>
+</html>
